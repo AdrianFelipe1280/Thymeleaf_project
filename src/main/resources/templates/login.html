@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Moderno</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary-orange: #FF6F00; /* Laranja vibrante */
+            --primary-orange-hover: #E66300;
+            --background-white: #FFFFFF;
+            --background-light-gray: #f5f7fa;
+            --text-dark: #333333;
+            --text-light: #FFFFFF;
+            --text-gray: #777777;
+            --border-color: #e0e0e0;
+            --font-family: 'Nunito', sans-serif;
+            --box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-family);
+            background-color: var(--background-light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .login-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr; /* Divisão em duas colunas */
+            width: 100%;
+            max-width: 900px;
+            min-height: 550px;
+            background-color: var(--background-white);
+            border-radius: 15px;
+            box-shadow: var(--box-shadow);
+            overflow: hidden; /* Mantém os cantos arredondados nos filhos */
+        }
+
+        /* Painel decorativo laranja */
+        .info-panel {
+            background: var(--primary-orange);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 40px;
+        }
+
+        .info-panel h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .info-panel p {
+            font-size: 1.1rem;
+            max-width: 300px;
+        }
+
+        /* Painel do formulário branco */
+        .form-panel {
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .form-panel h3 {
+            color: var(--text-dark);
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .input-group i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-gray);
+            font-size: 1.2rem;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 15px 15px 15px 50px; /* Espaço à esquerda para o ícone */
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary-orange);
+            box-shadow: 0 0 8px rgba(255, 111, 0, 0.2);
+        }
+
+        .btn-login {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-orange);
+            color: var(--text-light);
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+
+        .btn-login:hover {
+            background-color: var(--primary-orange-hover);
+            transform: translateY(-2px);
+        }
+
+        .links-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+
+        .link {
+            color: var(--primary-orange);
+            text-decoration: none;
+            transition: text-decoration 0.3s;
+            margin: 5px;
+        }
+
+        .link:hover {
+            text-decoration: underline;
+        }
+
+        .separator {
+            text-align: center;
+            color: var(--text-gray);
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+
+        .btn-secondary {
+            width: 100%;
+            padding: 12px;
+            background-color: transparent;
+            color: var(--primary-orange);
+            border: 2px solid var(--primary-orange);
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            text-align: center;
+            text-decoration: none;
+            display: block;
+            cursor: pointer;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background-color: var(--primary-orange);
+            color: var(--text-light);
+        }
+
+        /* Responsividade para telas menores */
+        @media (max-width: 768px) {
+            .login-wrapper {
+                grid-template-columns: 1fr; /* Muda para uma única coluna */
+                max-width: 450px;
+                margin: 20px;
+                min-height: auto;
+            }
+
+            .info-panel {
+                display: none; /* Esconde o painel laranja para economizar espaço */
+            }
+
+            .form-panel {
+                padding: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="login-wrapper">
+    <div class="info-panel">
+        <h2>Bem-vindo de Volta!</h2>
+        <p>Acesse sua conta para gerenciar seus chamados e serviços de forma rápida e fácil.</p>
+    </div>
+
+    <div class="form-panel">
+        <h3>Acesse sua Conta</h3>
+
+        <form th:action="@{/login}" method="post">
+            <div class="input-group">
+                <i class="bi bi-person"></i>
+                <input type="text" id="username" name="username" placeholder="Usuário" required>
+            </div>
+            <div class="input-group">
+                <i class="bi bi-lock"></i>
+                <input type="password" id="password" name="password" placeholder="Senha" required>
+            </div>
+            <button type="submit" class="btn-login">Entrar</button>
+        </form>
+
+        <div class="links-container">
+            <a href="#" class="link">Esqueceu sua senha?</a>
+            <a th:href="@{/cadastro-cliente}" class="link">Não tem uma conta?</a>
+        </div>
+
+        <div class="separator">ou</div>
+
+        <a th:href="@{/criar-admin}" class="btn-secondary">Criar Funcionário Padrão</a>
+    </div>
+</div>
+
+</body>
+</html>

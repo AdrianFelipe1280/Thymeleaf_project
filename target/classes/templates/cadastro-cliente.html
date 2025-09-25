@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Cliente</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        /* Define variáveis de cor para facilitar a manutenção */
+        :root {
+            --primary-color: #3498db;
+            --primary-hover-color: #2980b9;
+            --background-color: #f4f7f6;
+            --form-background: #ffffff;
+            --text-color: #34495e;
+            --input-border-color: #dfe6e9;
+            --danger-color: #e74c3c;
+            --box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Estilos gerais do corpo da página */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--background-color);
+            margin: 0;
+            display: flex;
+            justify-content: center; /* Centraliza o formulário horizontalmente */
+            align-items: center;    /* Centraliza o formulário verticalmente */
+            min-height: 100vh;      /* Garante que a página ocupe a tela inteira */
+        }
+
+        /* Contêiner do formulário */
+        .form-container {
+            background-color: var(--form-background);
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: var(--box-shadow);
+            width: 100%;
+            max-width: 450px;
+            box-sizing: border-box;
+        }
+
+        /* Título do formulário */
+        h1 {
+            color: var(--text-color);
+            text-align: center;
+            margin-top: 0;
+            margin-bottom: 30px;
+            font-weight: 700;
+        }
+
+        /* Agrupa label e input para melhor espaçamento */
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        /* Estilo dos rótulos (labels) */
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        /* Estilo dos campos de texto e senha */
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--input-border-color);
+            border-radius: 5px;
+            box-sizing: border-box;
+            font-size: 16px;
+            transition: border-color 0.3s, box-shadow 0.3s; /* Transição suave */
+        }
+
+        /* Efeito de foco nos campos de input */
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 5px rgba(52, 152, 219, 0.5);
+        }
+
+        /* Mensagem de aviso para o campo usuário */
+        .warning-text {
+            color: var(--danger-color);
+            font-size: 13px;
+            margin-top: 5px;
+            margin-bottom: 0;
+        }
+
+        /* Botão de cadastro */
+        button {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 500;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        /* Efeito hover no botão */
+        button:hover {
+            background-color: var(--primary-hover-color);
+            transform: translateY(-2px); /* Efeito de "levantar" o botão */
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Crie sua Conta</h1>
+
+    <form th:action="@{/cadastro-cliente}" th:object="${cliente}" method="post">
+
+        <div class="input-group">
+            <label for="nome">Nome</label>
+            <input type="text" id="nome" th:field="*{nome}" required placeholder="Digite seu nome completo"/>
+        </div>
+
+        <div class="input-group">
+            <label for="telefone">Telefone</label>
+            <input type="text" id="telefone" th:field="*{telefone}" required placeholder="(XX) XXXXX-XXXX"/>
+        </div>
+
+        <div class="input-group">
+            <label for="usuario">Usuário</label>
+            <input type="text"
+                   id="usuario"
+                   th:field="*{usuario}"
+                   required
+                   pattern=".{8,}"
+                   title="O usuario deve ter no minimo 8 letras"
+                   placeholder="Mínimo de 8 caracteres"/>
+            <p class="warning-text">Atenção! O usuário será salvo apenas com letras minúsculas.</p>
+        </div>
+
+        <div class="input-group">
+            <label for="senha">Senha</label>
+            <input type="password"
+                   id="senha"
+                   th:field="*{senha}"
+                   required
+                   pattern="(?=.*[A-Z]).{8,}"
+                   title="A senha deve ter no mínimo 8 caracteres e conter pelo menos uma letra maiúscula"
+                   placeholder="Mínimo 8 caracteres e uma letra maiúscula"/>
+        </div>
+
+        <button type="submit">Cadastrar</button>
+    </form>
+</div>
+
+</body>
+</html>
